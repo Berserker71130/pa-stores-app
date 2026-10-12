@@ -222,9 +222,11 @@ export default function Home() {
                 Dedicated To Serving Our Community With Excellence.
               </h2>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-base">
-                P & A Stores has long stood as a trusted neighbourhood
-                destination for quality daily household essentials, wholesale
-                provisions and friendly retail service.
+                P & A Stores is your premier destination for everyday household
+                FMCG essentials As a major distributor, wholesaler and dealer in
+                core commodities-including sugar, flour, rice, cooking oil, and
+                beverages-we are committed to delivering top-tier products at
+                affordable, competitive prices.
               </p>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-base">
                 This digital platform represents our next major leap
@@ -247,6 +249,14 @@ export default function Home() {
                   </span>
                   <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
                     Digital Workflow
+                  </span>
+                </div>
+                <div className="border-l border-slate-200 dark:border-slate-800 pl-4">
+                  <span className="block text-2xl font-black text-amber-500">
+                    🚚 Express
+                  </span>
+                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    Delivery Services
                   </span>
                 </div>
               </div>
