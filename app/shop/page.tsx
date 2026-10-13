@@ -118,7 +118,7 @@ const INITIAL_PRODUCTS = [
   },
   {
     id: "13",
-    name: "Fanta Orange (50cl PET",
+    name: "Fanta Orange (35cl PET)",
     category: "Beverages",
     price: 3450,
     desc: "Fruity orange sparkling soft drink",
@@ -146,7 +146,7 @@ const INITIAL_PRODUCTS = [
   {
     id: "16",
     name: "Optimum Parboiled Rice",
-    category: "Provision",
+    category: "Provisions",
     price: 66000,
     desc: "Long grain well packaged rice",
     image: "/optimum.jpg",
@@ -186,6 +186,87 @@ const INITIAL_PRODUCTS = [
     price: 10500,
     desc: "Pure Natural spring drinking water bottle",
     image: "/swan.jpg",
+    instock: true,
+  },
+  {
+    id: "21",
+    name: "Mirinda Green Apple (50cl)",
+    category: "Beverages",
+    price: 4200,
+    desc: "Crisp refreshing green apple flavoured carbonated soft drink",
+    image: "/greenapple.jpg",
+    instock: true,
+  },
+  {
+    id: "22",
+    name: "Mirinda Pineapple (50cl)",
+    category: "Beverages",
+    price: 4200,
+    desc: "Fruity and vibrant pineapple flavoured carbonated soft drink",
+    image: "/pineapple.jpg",
+    instock: true,
+  },
+  {
+    id: "23",
+    name: "Viva Plus Detergent (20g)",
+    category: "Household",
+    price: 2300,
+    desc: "Compact single-use multi-enzyme stain removal detergent sachet",
+    image: "/viva20g.jpg",
+    instock: true,
+  },
+  {
+    id: "24",
+    name: "Viva Plus Detergent (170g)",
+    category: "Household",
+    price: 2600,
+    desc: "Convinient medium-pack laundry powder with floral freshness",
+    image: "/viva170g.jpg",
+    instock: true,
+  },
+  {
+    id: "25",
+    name: "Viva Plus Detergent (800g)",
+    category: "Household",
+    price: 3000,
+    desc: "Family-size multi-enzyme laundry detergent powder for tough stains",
+    image: "/viva800g.jpg",
+    instock: true,
+  },
+  {
+    id: "26",
+    name: "Viva Multipurpose Bar Soap (250g)",
+    category: "Household",
+    price: 2250,
+    desc: "Multi-purpose washing and bathing soap with rich lather and moisturizers",
+    image: "/vivasoap.jpg",
+    instock: true,
+  },
+  {
+    id: "27",
+    name: "Crystal Vegetable Oil (25 Liters)",
+    category: "Cooking Oil",
+    price: 7000,
+    desc: "Cholesterol-free premium refined vegetable cooking oil keg",
+    image: "/crystal.jpg",
+    instock: true,
+  },
+  {
+    id: "28",
+    name: "Devon King's Vegetable Oil (25 Liters)",
+    category: "Cooking Oil",
+    price: 72000,
+    desc: "Heart friendly, high-quality refined vegetable oil for frying and cooking",
+    image: "/kings.jpg",
+    instock: true,
+  },
+  {
+    id: "29",
+    name: "Star Vegetable Oil (25 Liters)",
+    category: "Cooking Oil",
+    price: 68000,
+    desc: "Pure refined bulk cooking vegetable oil keg for commercial and kitchen use",
+    image: "/star.jpg",
     instock: true,
   },
 ];
@@ -363,7 +444,14 @@ export default function ShopApp() {
 
           {/* Category Filter Pills */}
           <div className="flex items-center space-x-2 overflow-x-auto pb-4 mb-8 no-scrollbar">
-            {["All", "Provisions", "Beverages", "Toiletries"].map((cat) => (
+            {[
+              "All",
+              "Provisions",
+              "Beverages",
+              "Household",
+              "Cooking Oil",
+              "Toiletries",
+            ].map((cat) => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
