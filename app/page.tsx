@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { ShieldCheck, Zap, Truck } from "lucide-react";
 
 export default function Home() {
   const [darkMode, setDarkMode] = useState(false);
@@ -174,7 +175,7 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {[
                 {
-                  icon: "⚡",
+                  icon: <Zap />,
                   title: "Instant Catalog Access",
                   desc: "Browse verified store stock instantly with category filters and real-time pricing.",
                 },
@@ -215,7 +216,7 @@ export default function Home() {
         >
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <span className="text-xs font-black text-amber-500 uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20">
+              <span className="text-xs font-black text-amber-500 uppercase tracking-widest bg-amber-400/10 px-3.5 py-1.5 rounded-full border border-amber-400/20 inline-block">
                 Our Heritage & Vision
               </span>
               <h2 className="text-3xl sm:text-4xl font-black tracking-tight">
@@ -223,10 +224,10 @@ export default function Home() {
               </h2>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-base">
                 P & A Stores is your premier destination for everyday household
-                FMCG essentials As a major distributor, wholesaler and dealer in
-                core commodities-including sugar, flour, rice, cooking oil, and
-                beverages-we are committed to delivering top-tier products at
-                affordable, competitive prices.
+                FMCG essentials. As a major distributor, wholesaler and dealer
+                in core commodities—including sugar, flour, rice, cooking oil,
+                and beverages—we are committed to delivering top-tier products
+                at affordable, competitive prices.
               </p>
               <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-base">
                 This digital platform represents our next major leap
@@ -234,28 +235,38 @@ export default function Home() {
                 high-speed technology to make inventory tracking and customer
                 ordering smoother than ever.
               </p>
-              <div className="pt-2 flex items-center space-x-6">
-                <div>
-                  <span className="block text-2xl font-black text-amber-500">
-                    100%
-                  </span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+
+              {/* Value Highlights Grid with Lucide Icons */}
+              <div className="pt-2 grid grid-cols-3 gap-3 sm:gap-4 border-t border-slate-200 dark:border-slate-800">
+                {/* Column 1: Verified Inventory */}
+                <div className="space-y-1">
+                  <div className="flex items-center gap-1.5 text-amber-500 font-black text-lg sm:text-xl">
+                    <ShieldCheck className="w-5 h-5 text-amber-500 shrink-0" />
+                    <span>100%</span>
+                  </div>
+                  <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight">
                     Verified Inventory
                   </span>
                 </div>
-                <div className="border-l border-slate-200 dark:border-slate-800 pl-6">
-                  <span className="block text-2xl font-black text-amber-500">
-                    Fast
-                  </span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+
+                {/* Column 2: Fast Digital Workflow */}
+                <div className="border-l border-slate-200 dark:border-slate-800 pl-3 sm:pl-4 space-y-1">
+                  <div className="flex items-center gap-1.5 text-amber-500 font-black text-lg sm:text-xl">
+                    <Zap className="w-5 h-5 text-amber-500 shrink-0" />
+                    <span>Fast</span>
+                  </div>
+                  <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight">
                     Digital Workflow
                   </span>
                 </div>
-                <div className="border-l border-slate-200 dark:border-slate-800 pl-4">
-                  <span className="block text-2xl font-black text-amber-500">
-                    🚚 Express
-                  </span>
-                  <span className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+
+                {/* Column 3: Express Delivery Services */}
+                <div className="border-l border-slate-200 dark:border-slate-800 pl-3 sm:pl-4 space-y-1">
+                  <div className="flex items-center gap-1.5 text-amber-500 font-black text-lg sm:text-xl">
+                    <Truck className="w-5 h-5 text-amber-500 shrink-0" />
+                    <span>Express</span>
+                  </div>
+                  <span className="block text-xs text-slate-500 dark:text-slate-400 font-medium leading-tight">
                     Delivery Services
                   </span>
                 </div>
