@@ -5,271 +5,17 @@ import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaShoppingCart } from "react-icons/fa";
+import { supabase } from "@/lib/supabaseClient";
 
-// Real P & A Stores Product Dataset (Supabase-Ready Schema)
-const INITIAL_PRODUCTS = [
-  {
-    id: "1",
-    name: "Golden Penny Refined Sugar (500g)",
-    category: "Provisions",
-    price: 1800,
-    desc: "Pure white refined household sugar staple",
-    image: "/sugar.jpg",
-    instock: true,
-  },
-  {
-    id: "2",
-    name: "Coca-Cola Original (50cl PET)",
-    category: "Beverages",
-    price: 1400,
-    desc: "Classic sparkling soft drink bottle",
-    image: "/coke50cl.jpg",
-    instock: true,
-  },
-  {
-    id: "3",
-    name: "Coca-Cola Original (35cl Bottle)",
-    category: "Beverages",
-    price: 1300,
-    desc: "Chilled refreshing classic cola beverage",
-    image: "/coke35cl.jpg",
-    instock: true,
-  },
-  {
-    id: "4",
-    name: "Frutta Premium Juice Orange/Black Current",
-    category: "Beverages",
-    price: 1400,
-    desc: "Rich fruit juice blend refreshment pack",
-    image: "/frutta.jpg",
-    instock: true,
-  },
-  {
-    id: "5",
-    name: "Pop Cola Refreshing Soft Drink",
-    category: "Beverages",
-    price: 1150,
-    desc: "Crisp carbonated cola beverage",
-    image: "/popcola.jpg",
-    instock: true,
-  },
-  {
-    id: "6",
-    name: "Pop Cola Premium Display",
-    category: "Beverages",
-    price: 2200,
-    desc: "Chilled bottle cola soft drink",
-    image: "/popcola2.jpg",
-    instock: true,
-  },
-  {
-    id: "7",
-    name: "Pop Power Energy Drink",
-    category: "Beverages",
-    price: 2450,
-    desc: "High energy revitalizing boost drink",
-    image: "/poppower.jpg",
-    instock: true,
-  },
-  {
-    id: "8",
-    name: "Pop Fizzy Sparkling Drink Orange/Clear",
-    category: "Beverages",
-    price: 2400,
-    desc: "Fruity carbonated soft drink",
-    image: "/popfizzy.jpg",
-    instock: true,
-  },
-  {
-    id: "9",
-    name: "Maltina Nourishing Drink",
-    category: "Beverages",
-    price: 12000,
-    desc: "Premium non-alcoholic malt drink",
-    image: "/maltina.jpg",
-    instock: true,
-  },
-  {
-    id: "10",
-    name: "Malta Guinness Classic",
-    category: "Beverages",
-    price: 12500,
-    desc: "Rich vitamin-fortified malt drink",
-    image: "/maltaguinness.jpg",
-    instock: true,
-  },
-  {
-    id: "11",
-    name: "Nutri-Milk Drink (Small)",
-    category: "Beverages",
-    price: 3500,
-    desc: "Creamy apple flavoured milk drink",
-    image: "/nutrimilksmall.jpg",
-    instock: true,
-  },
-  {
-    id: "12",
-    name: "Nutri-Milk Drink (Big)",
-    category: "Beverages",
-    price: 4500,
-    desc: "Large bottle nourishing milk drink",
-    image: "/nutrimilkbig.jpg",
-    instock: true,
-  },
-  {
-    id: "13",
-    name: "Fanta Orange (35cl PET)",
-    category: "Beverages",
-    price: 3450,
-    desc: "Fruity orange sparkling soft drink",
-    image: "/fanta.jpg",
-    instock: true,
-  },
-  {
-    id: "14",
-    name: "Pepsi Soft Drink (50cl PET)",
-    category: "Beverages",
-    price: 3550,
-    desc: "Refreshing carbonated cola drink",
-    image: "/pepsi.jpg",
-    instock: true,
-  },
-  {
-    id: "15",
-    name: "Predator Energy Drink",
-    category: "Beverages",
-    price: 4000,
-    desc: "Powerful energy drink bottle",
-    image: "/predator.jpg",
-    instock: true,
-  },
-  {
-    id: "16",
-    name: "Optimum Parboiled Rice",
-    category: "Provisions",
-    price: 66000,
-    desc: "Long grain well packaged rice",
-    image: "/optimum.jpg",
-    instock: true,
-  },
-  {
-    id: "17",
-    name: "Golden Penny / BUA Flour",
-    category: "Provisions",
-    price: 70000,
-    desc: "Fine baking and cooking wheat flour",
-    image: "/flour.jpg",
-    instock: true,
-  },
-  {
-    id: "18",
-    name: "Polished Nigerian Azman Rice",
-    category: "Provisions",
-    price: 65000,
-    desc: "Premium long grain household rice",
-    image: "/rice.jpg",
-    instock: true,
-  },
-  {
-    id: "19",
-    name: "Indomie Super Pack Instant Noodles (Carton/Pack)",
-    category: "Provisions",
-    price: 45000,
-    desc: "Delicious quick-cook instant noodles",
-    image: "/indomie.jpg",
-    instock: true,
-  },
-  {
-    id: "20",
-    name: "Swan Natural Spring Water (75cl)",
-    category: "Beverages",
-    price: 10500,
-    desc: "Pure Natural spring drinking water bottle",
-    image: "/swan.jpg",
-    instock: true,
-  },
-  {
-    id: "21",
-    name: "Mirinda Green Apple (50cl)",
-    category: "Beverages",
-    price: 4200,
-    desc: "Crisp refreshing green apple flavoured carbonated soft drink",
-    image: "/greenapple.jpg",
-    instock: true,
-  },
-  {
-    id: "22",
-    name: "Mirinda Pineapple (50cl)",
-    category: "Beverages",
-    price: 4200,
-    desc: "Fruity and vibrant pineapple flavoured carbonated soft drink",
-    image: "/pineapple.jpg",
-    instock: true,
-  },
-  {
-    id: "23",
-    name: "Viva Plus Detergent (20g)",
-    category: "Household",
-    price: 2300,
-    desc: "Compact single-use multi-enzyme stain removal detergent sachet",
-    image: "/viva20g.jpg",
-    instock: true,
-  },
-  {
-    id: "24",
-    name: "Viva Plus Detergent (170g)",
-    category: "Household",
-    price: 2600,
-    desc: "Convinient medium-pack laundry powder with floral freshness",
-    image: "/viva170g.jpg",
-    instock: true,
-  },
-  {
-    id: "25",
-    name: "Viva Plus Detergent (800g)",
-    category: "Household",
-    price: 3000,
-    desc: "Family-size multi-enzyme laundry detergent powder for tough stains",
-    image: "/viva800g.jpg",
-    instock: true,
-  },
-  {
-    id: "26",
-    name: "Viva Multipurpose Bar Soap (250g)",
-    category: "Household",
-    price: 2250,
-    desc: "Multi-purpose washing and bathing soap with rich lather and moisturizers",
-    image: "/vivasoap.jpg",
-    instock: true,
-  },
-  {
-    id: "27",
-    name: "Crystal Vegetable Oil (25 Liters)",
-    category: "Cooking Oil",
-    price: 7000,
-    desc: "Cholesterol-free premium refined vegetable cooking oil keg",
-    image: "/crystal.jpg",
-    instock: true,
-  },
-  {
-    id: "28",
-    name: "Devon King's Vegetable Oil (25 Liters)",
-    category: "Cooking Oil",
-    price: 72000,
-    desc: "Heart friendly, high-quality refined vegetable oil for frying and cooking",
-    image: "/kings.jpg",
-    instock: true,
-  },
-  {
-    id: "29",
-    name: "Star Vegetable Oil (25 Liters)",
-    category: "Cooking Oil",
-    price: 68000,
-    desc: "Pure refined bulk cooking vegetable oil keg for commercial and kitchen use",
-    image: "/star.jpg",
-    instock: true,
-  },
-];
+interface Product {
+  id: string;
+  name: string;
+  category: string;
+  price: number;
+  desc?: string;
+  image_url: string;
+  in_stock: boolean;
+}
 
 interface cartItem {
   id: string;
@@ -280,12 +26,15 @@ interface cartItem {
 }
 
 export default function ShopApp() {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [loading, setLoading] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
   const [cart, setCart] = useState<cartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isOrderSubmitted, setIsOrderSubmitted] = useState(false);
+  const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
 
   // Sync Dark Mode Class
   useEffect(() => {
@@ -296,8 +45,32 @@ export default function ShopApp() {
     }
   }, [darkMode]);
 
+  // Fetch Live Products from Supabase
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const { data, error } = await supabase
+          .from("products")
+          .select("*")
+          .order("created_at", { ascending: true });
+
+        if (error) {
+          console.error("Error fetching products:", error.message);
+        } else if (data) {
+          setProducts(data);
+        }
+      } catch (err) {
+        console.error("Unexpected error fetching products:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
   // Cart Handlers
-  const addToCart = (product: (typeof INITIAL_PRODUCTS)[0]) => {
+  const addToCart = (product: Product) => {
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.id === product.id);
       if (existing) {
@@ -314,7 +87,7 @@ export default function ShopApp() {
           name: product.name,
           price: product.price,
           quantity: 1,
-          image: product.image,
+          image: product.image_url,
         },
       ];
     });
@@ -342,7 +115,7 @@ export default function ShopApp() {
   );
 
   // Filter Logic
-  const filteredProducts = INITIAL_PRODUCTS.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     const matchesCategory =
       activeCategory === "All" || product.category === activeCategory;
     const matchesSearch = product.name
@@ -350,6 +123,35 @@ export default function ShopApp() {
       .includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
+
+  // Submit Order to Supabase Database
+  const handleOrderSubmission = async () => {
+    if (cart.length === 0) return;
+    setIsSubmittingOrder(true);
+
+    try {
+      const { error } = await supabase.from("orders").insert([
+        {
+          customer_name: "Walk-in / Online Customer",
+          customer_phone: "N/A",
+          delivery_address: "Store Pickup / Direct Order",
+          items: cart,
+          total_amount: totalCartPrice,
+          status: "Pending",
+        },
+      ]);
+
+      if (error) {
+        console.error("Order submission error:", error.message);
+      }
+    } catch (err) {
+      console.error("Error submitting order:", err);
+    } finally {
+      setIsSubmittingOrder(false);
+      setIsCartOpen(false);
+      setIsOrderSubmitted(true);
+    }
+  };
 
   return (
     <div className={darkMode ? "dark min-h-screen" : "min-h-screen"}>
@@ -466,89 +268,103 @@ export default function ShopApp() {
             ))}
           </div>
 
-          {/* Product Grid */}
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-          >
-            <AnimatePresence>
-              {filteredProducts.map((product) => (
-                <motion.div
-                  key={product.id}
-                  layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  whileHover={{ y: -6 }}
-                  transition={{ duration: 0.3 }}
-                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group relative overflow-hidden"
-                >
-                  <div>
-                    {/* Dedicated Image Box - Ready For Real Photos */}
-                    <div className="relative w-full h-56 bg-slate-100 dark:bg-slate-800 rounded-2xl mb-5 overflow-hidden flex items-center justify-center border border-slate-200/50 dark:border-slate-700/50">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        className="object-cover group-hover:scale-105 transition-transform duration-500"
-                        onError={(e) => {
-                          const target = e.target as HTMLElement;
-                          target.style.display = "none";
-                        }}
-                      />
-                      {/* Fallback Placeholder Display */}
-                      <div className="text-center p-4">
-                        <span className="text-3xl block mb-2">📦</span>
-                        <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
-                          Photo Placeholder
+          {/* Loading Skeleton */}
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map((i) => (
+                <div
+                  key={i}
+                  className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 animate-pulse h-80"
+                />
+              ))}
+            </div>
+          ) : (
+            /* Product Grid */
+            <motion.div
+              layout
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              <AnimatePresence>
+                {filteredProducts.map((product) => (
+                  <motion.div
+                    key={product.id}
+                    layout
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    whileHover={{ y: -6 }}
+                    transition={{ duration: 0.3 }}
+                    className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-3xl p-5 shadow-sm hover:shadow-xl transition-all flex flex-col justify-between group relative overflow-hidden"
+                  >
+                    <div>
+                      {/* Dedicated Image Box */}
+                      <div className="relative w-full h-56 bg-slate-100 dark:bg-slate-800 rounded-2xl mb-5 overflow-hidden flex items-center justify-center border border-slate-200/50 dark:border-slate-700/50">
+                        <Image
+                          src={product.image_url}
+                          alt={product.name}
+                          fill
+                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => {
+                            const target = e.target as HTMLElement;
+                            target.style.display = "none";
+                          }}
+                        />
+                        {/* Fallback Placeholder Display */}
+                        <div className="text-center p-4">
+                          <span className="text-3xl block mb-2">📦</span>
+                          <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block">
+                            Photo Placeholder
+                          </span>
+                          <span className="text-[10px] text-slate-500 dark:text-slate-400">
+                            (Drop photo into {product.image_url})
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="flex items-center justify-between mb-1">
+                        <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest bg-amber-400/10 px-2.5 py-1 rounded-md">
+                          {product.category}
                         </span>
-                        <span className="text-[10px] text-slate-500 dark:text-slate-400">
-                          (Drop photo into {product.image})
+                        <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
+                          • In Stock
                         </span>
                       </div>
+
+                      <h3 className="font-extrabold text-slate-900 dark:text-white text-lg mt-2">
+                        {product.name}
+                      </h3>
+                      {product.desc && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
+                          {product.desc}
+                        </p>
+                      )}
                     </div>
 
-                    <div className="flex items-center justify-between mb-1">
-                      <span className="text-[10px] font-black text-amber-500 uppercase tracking-widest bg-amber-400/10 px-2.5 py-1 rounded-md">
-                        {product.category}
-                      </span>
-                      <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-md">
-                        • In Stock
-                      </span>
+                    <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] text-slate-400 block font-medium uppercase tracking-wider">
+                          Unit Price
+                        </span>
+                        <span className="text-lg font-black text-slate-900 dark:text-white">
+                          ₦{product.price.toLocaleString()}
+                        </span>
+                      </div>
+
+                      <motion.button
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => addToCart(product)}
+                        className="bg-amber-400 hover:bg-amber-500 text-black px-4 py-2.5 rounded-xl text-xs font-black transition shadow-md shadow-amber-500/20 active:scale-95 cursor-pointer"
+                      >
+                        + Add to Cart
+                      </motion.button>
                     </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </motion.div>
+          )}
 
-                    <h3 className="font-extrabold text-slate-900 dark:text-white text-lg mt-2">
-                      {product.name}
-                    </h3>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 leading-relaxed">
-                      {product.desc}
-                    </p>
-                  </div>
-
-                  <div className="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-                    <div>
-                      <span className="text-[10px] text-slate-400 block font-medium uppercase tracking-wider">
-                        Unit Price
-                      </span>
-                      <span className="text-lg font-black text-slate-900 dark:text-white">
-                        ₦{product.price.toLocaleString()}
-                      </span>
-                    </div>
-
-                    <motion.button
-                      whileTap={{ scale: 0.9 }}
-                      onClick={() => addToCart(product)}
-                      className="bg-amber-400 hover:bg-amber-500 text-black px-4 py-2.5 rounded-xl text-xs font-black transition shadow-md shadow-amber-500/20 active:scale-95 cursor-pointer"
-                    >
-                      + Add to Cart
-                    </motion.button>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
-          </motion.div>
-
-          {filteredProducts.length === 0 && (
+          {!loading && filteredProducts.length === 0 && (
             <div className="text-center py-20">
               <span className="text-4xl block mb-3">🔍</span>
               <h3 className="text-lg font-bold">No Products Found</h3>
@@ -651,14 +467,13 @@ export default function ShopApp() {
                   </div>
 
                   <button
-                    disabled={cart.length === 0}
-                    onClick={() => {
-                      setIsCartOpen(false);
-                      setIsOrderSubmitted(true);
-                    }}
+                    disabled={cart.length === 0 || isSubmittingOrder}
+                    onClick={handleOrderSubmission}
                     className="w-full bg-amber-400 hover:bg-amber-500 disabled:opacity-50 text-black font-black py-4 rounded-2xl transition shadow-xl shadow-amber-500/20 text-center text-sm cursor-pointer"
                   >
-                    Submit Order to Store →
+                    {isSubmittingOrder
+                      ? "Submitting Order..."
+                      : "Submit Order to Store →"}
                   </button>
                 </div>
               </motion.div>
